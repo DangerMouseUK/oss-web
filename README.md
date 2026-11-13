@@ -23,7 +23,8 @@ public/            everything that is served, exactly as committed
   index.html       the page
   404.html         the not-found page
   styles.css
-  site.js          the "Copy" buttons on command blocks; the page works without it
+  site.js          copy buttons, the current section in the header, full-size
+                   screenshots; the page works without it
   favicon.svg
   images/          screenshots, taken from the client and server repositories' docs
   robots.txt
