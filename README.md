@@ -91,6 +91,14 @@ the full URL: `https://ossubspace.com/favicon.svg`. A file at a path that did no
 before needs no purge, there being nothing cached to serve. Browsers that already hold the
 old copy keep it for up to four hours on top of that, so hard-reload to check your own.
 
+**Bump `?v=` when you change `styles.css` or `site.js`.** Both pages link them with a version
+query — `/styles.css?v=1` — because purging Cloudflare does nothing about the copy a visitor
+already holds. A browser revalidates the page's HTML far more readily than the files that
+page links, so within those four hours a returning visitor can get today's HTML alongside
+yesterday's stylesheet, which does not look stale, it looks broken. Changing the number makes
+it a URL they have never fetched. Bump only the file you changed, in both `index.html` and
+`404.html`.
+
 ## Rules for this repository
 
 - **Nothing secret goes in here, ever.** No tokens, keys, account or app IDs, internal
