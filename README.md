@@ -47,14 +47,16 @@ Then open <http://localhost:8000>.
 ## Deploy
 
 The site is a **static site component on DigitalOcean App Platform**, built from this
-repository's `main` branch. There is nothing to build: App Platform serves `public/` as it
-is and redeploys on every push. [`.do/app.yaml`](.do/app.yaml) is the spec.
+repository's `main` branch, with `public/` as its source directory. There is nothing to
+build: App Platform serves `public/` as it is and redeploys on every push. [`.do/app.yaml`](.do/app.yaml) is the spec.
 
 **First time:**
 
 1. Create the app — either `doctl apps create --spec .do/app.yaml`, or in the control panel
-   *Create App → GitHub → DangerMouseUK/oss-web → main*, with source directory `/`, no build
-   command and output directory `public`, as a **Static Site**.
+   *Create App → GitHub → DangerMouseUK/oss-web → main* with **Source directories** set to
+   `public`. App Platform detects a static site only from an `index.html` at the root of the
+   source directory, so left blank it reports *"No components detected"*. It should then
+   offer a **Static Site** with no build command.
 2. Check the app's default `*.ondigitalocean.app` address serves the page.
 3. Add the custom domain `osssubspace.com` to the app (the spec already lists it) and choose
    *"I'll manage my domain"*: DNS is at Cloudflare, not DigitalOcean.
