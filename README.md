@@ -82,6 +82,15 @@ build: App Platform serves `public/` as it is and redeploys on every push. [`.do
    (301), so there is one canonical address.
 5. Optional: *Always Use HTTPS* on, and HSTS once you are sure HTTPS is staying.
 
+**Purge the cache after replacing a file in place.** A proxied response leaves Cloudflare
+with a 24-hour edge TTL, so when a deploy changes a file that keeps its path — `favicon.svg`,
+`styles.css`, a screenshot — the edge goes on serving the old bytes long after App Platform
+has the new ones. The page's HTML updates and the asset it points at does not, which looks
+like a deploy that half worked. *Caching → Configuration → Purge Cache → Custom Purge*, with
+the full URL: `https://ossubspace.com/favicon.svg`. A file at a path that did not exist
+before needs no purge, there being nothing cached to serve. Browsers that already hold the
+old copy keep it for up to four hours on top of that, so hard-reload to check your own.
+
 ## Rules for this repository
 
 - **Nothing secret goes in here, ever.** No tokens, keys, account or app IDs, internal
