@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'self'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; base-uri 'self'; form-action 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Open SubSpace — SubSpace, written again in Rust</title>
   <meta name="description" content="Open SubSpace is the 1997 multiplayer space shooter SubSpace written again in Rust, from the wire protocol up: a client, a zone server and a shared core, all open source.">
@@ -22,6 +22,7 @@
   <meta property="og:image" content="https://ossubspace.com/images/arena.png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="800">
+  <meta property="og:image:alt" content="oss-client flying in the bundled zone: two ships among green prizes, with the ship list, radar and energy bar on screen">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="stylesheet" href="/styles.css?v=1">
@@ -86,7 +87,7 @@
         </div>
 
         <dl class="specs">
-          <div><dt>Language</dt><dd>Rust, 1.88 or newer</dd></div>
+          <div><dt>Language</dt><dd>Rust 1.88 or newer; 1.89 for the server</dd></div>
           <div><dt>Simulation</dt><dd>100 Hz integer physics</dd></div>
           <div><dt>On the wire</dt><dd>VIE and OpenSec, one port</dd></div>
           <div><dt>Zones</dt><dd>ASSS directories, unchanged</dd></div>
@@ -159,7 +160,7 @@
             <pre><code><span class="ln">git clone https://github.com/DangerMouseUK/oss-core</span>
 <span class="ln">git clone https://github.com/DangerMouseUK/oss-client</span>
 <span class="ln">cd oss-client</span>
-<span class="ln">cargo run --release</span></code></pre>
+<span class="ln">cargo run --release -p oss-client</span></code></pre>
           </div>
           <p>
             That opens the login screen: zone, name, password, arena, ship. <kbd>F3</kbd> is the
@@ -204,7 +205,8 @@
           <h2>One command, and you are a zone</h2>
           <p>
             With no arguments, <code>oss-server</code> runs its bundled zone — the ASSS 1.4.4
-            sample zone, compiled into the binary — on UDP port 5000. You are now a zone.
+            sample zone, compiled into the binary — on UDP port 5000, with the ping port on 5001.
+            You are now a zone. The server needs Rust 1.89 or newer.
           </p>
           <div class="term" data-copy>
             <div class="term-bar"><span>Shell</span></div>
@@ -213,7 +215,8 @@
 <span class="ln">cd oss-server</span>
 <span class="ln">cargo run --release</span></code></pre>
           </div>
-          <p>Already run a zone? Point it at your directory, unchanged:</p>
+          <p>Already run a zone? Point it at your directory, unchanged. <code>cargo run --release</code>
+            leaves the binary at <code>target/release/oss-server</code>:</p>
           <div class="term" data-copy>
             <div class="term-bar"><span>Shell</span></div>
             <pre><code><span class="cm"># run an ASSS-style zone directory</span>
@@ -224,7 +227,8 @@
           <ul class="ticks">
             <li>ASSS's config reader: <code>#include</code>, sections, per-arena overrides.</li>
             <li>One process, structured logs, a JSON admin API and Prometheus metrics.</li>
-            <li>43 modules in the tree; the ones ASSS has that this doesn't are named in <code>conf/modules.conf</code>.</li>
+            <li>43 modules in the tree, 34 of them loaded by the bundled zone; the ones ASSS has that this doesn't are named in <code>conf/modules.conf</code>.</li>
+            <li>A library first: a private or third-party build adds its own modules without patching the repository.</li>
             <li><code>oss-biller</code>: a small SQLite-backed SSC billing server for private and test zones.</li>
           </ul>
         </div>
@@ -308,8 +312,10 @@
             <h3>It plays with software nobody here wrote</h3>
             <p>A stock <code>oss-client</code> joined a zone running <strong>subgame</strong>, the
               original server software, and flew. An unmodified, prebuilt <strong>MERVBot 4.6</strong>
-              completed a full session on <code>oss-server</code>. A genuine <strong>Continuum 0.40</strong>
-              client logged in and flew on <code>oss-server</code>.</p>
+              completed a full session over VIE on <code>oss-server</code>. A genuine
+              <strong>Continuum 0.40</strong> client logged in and flew on <code>oss-server</code>,
+              with Continuum's key exchange supplied by a private module that is not in these
+              repositories.</p>
             <a class="more" href="https://github.com/DangerMouseUK/oss-server/blob/main/docs/interoperability.md">What has connected, and what each run did not cover →</a>
           </article>
           <article class="card">
@@ -324,7 +330,7 @@
             <p class="card-tag">Protocol</p>
             <h3>Every protocol page states its evidence level</h3>
             <p>One page per packet, each marked <em>Vectors</em>, <em>Sources</em>,
-              <em>Partly inferred</em>, <em>Observed</em> or <em>Open</em>. Where sources disagree
+              <em>Partly inferred</em>, <em>Project spec</em>, <em>Observed</em> or <em>Open</em>. Where sources disagree
               the page says so rather than picking quietly.</p>
             <a class="more" href="https://github.com/DangerMouseUK/oss-core/blob/main/docs/protocol/README.md">The protocol docs →</a>
           </article>
@@ -354,19 +360,24 @@
                 <h4>Client</h4>
                 <ul class="chips">
                   <li>Login and registration</li>
-                  <li>Arena entry</li>
+                  <li>Arena entry and <code>?go</code></li>
                   <li>Map/LVZ/news download with a cache</li>
                   <li>The full renderer and HUD</li>
                   <li>Flying and fighting with client-side prediction</li>
+                  <li>Kills and scores</li>
                   <li>Public, team, private, channel and squad chat with Continuum's prefixes</li>
                   <li>Macros</li>
-                  <li>Spectating</li>
+                  <li>The menu</li>
+                  <li>Spectating and following</li>
                   <li>Turrets</li>
                   <li>The zone browser</li>
                   <li>Replays</li>
-                  <li>Gamepads</li>
+                  <li>A settings screen</li>
+                  <li>Screenshots</li>
+                  <li>Gamepads, with remapping</li>
                   <li>Colour-blind and high-contrast palettes</li>
-                  <li>An offline sandbox</li>
+                  <li>Interface scaling</li>
+                  <li>An offline sandbox on any <code>.lvl</code> map</li>
                 </ul>
               </div>
               <div>
@@ -376,15 +387,22 @@
                   <li>Freq manager</li>
                   <li>Ships and weapons with plausibility checks</li>
                   <li>Kills and scoring</li>
-                  <li>Flags</li>
+                  <li>Flags, warzone and turf</li>
                   <li>Balls and soccer</li>
                   <li>KOTH</li>
                   <li>Bricks</li>
                   <li>Prizes and <code>?buy</code></li>
-                  <li>Chat and chatnet</li>
+                  <li>Banners</li>
+                  <li>Chat with ASSS's flood rules and obscene filter</li>
+                  <li>Chatnet</li>
                   <li>Capability groups</li>
-                  <li>Bans</li>
+                  <li>Bans and <code>?passwd</code></li>
                   <li>Persistence</li>
+                  <li>LVZ objects</li>
+                  <li>Map and news download</li>
+                  <li>Lag data and <code>?lag</code></li>
+                  <li>Periodic and turf rewards</li>
+                  <li>The game timer</li>
                   <li>Directory registration</li>
                   <li>SSC billing</li>
                   <li>Hot reload</li>
@@ -397,10 +415,12 @@
           <article class="status no" data-reveal>
             <h3><span class="led" aria-hidden="true"></span>Not here, on purpose</h3>
             <p><strong>Continuum's own encryption.</strong> Its key expansion is not public and
-              these repositories do not carry it. A build from source cannot join zones that
-              require Continuum's encryption; zones that accept VIE — including ASSS and the
-              original server — and OpenSec zones are reachable. The security path is a trait, so
-              a build that supplies its own cipher needs nothing here to change.</p>
+              these repositories do not carry it. A client built from them cannot join zones that
+              require Continuum's encryption, and a Continuum client can play on
+              <code>oss-server</code> only if that cipher module is supplied separately. Zones that
+              accept VIE — including ASSS and the original server — and OpenSec zones are
+              reachable. The security path is a trait, so a build that supplies its own cipher
+              needs nothing here to change.</p>
           </article>
           <article class="status todo" data-reveal>
             <h3><span class="led" aria-hidden="true"></span>Not done yet</h3>
@@ -410,7 +430,10 @@
               <li><strong>A browser build.</strong> The renderer is kept WebGPU-compatible and the
                 core crates build for WebAssembly, but the client is not built or tested there.</li>
               <li><strong>A crowd.</strong> It has been played against the original server software
-                and its own — not yet by a hundred people at once.</li>
+                and its own — not yet by a hundred people at once. Live internet zones may still
+                turn a client away on their own account policies.</li>
+              <li><strong>A stable API.</strong> Everything is 0.1.x and moves when the evidence
+                says it should. OpenSec has not yet had an external cryptographic review.</li>
             </ul>
           </article>
         </div>

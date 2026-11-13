@@ -23,8 +23,8 @@ public/            everything that is served, exactly as committed
   index.html       the page
   404.html         the not-found page
   styles.css
-  site.js          copy buttons, the current section in the header, full-size
-                   screenshots; the page works without it
+  site.js          copy buttons, the current section in the header, sections
+                   easing in, full-size screenshots; the page works without it
   favicon.svg      the site mark: the Javelin, ship two, seen from above
   favicon.ico      the same mark at 16, 32 and 48 px, for browsers that ask for a .ico
   apple-touch-icon.png
@@ -96,8 +96,8 @@ query — `/styles.css?v=1` — because purging Cloudflare does nothing about th
 already holds. A browser revalidates the page's HTML far more readily than the files that
 page links, so within those four hours a returning visitor can get today's HTML alongside
 yesterday's stylesheet, which does not look stale, it looks broken. Changing the number makes
-it a URL they have never fetched. Bump only the file you changed, in both `index.html` and
-`404.html`.
+it a URL they have never fetched. Bump only the file you changed, everywhere it is linked:
+`styles.css` in both `index.html` and `404.html`, `site.js` in `index.html` alone.
 
 ## Rules for this repository
 
