@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; base-uri 'self'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Open SubSpace — SubSpace, written again in Rust</title>
+  <meta name="description" content="Open SubSpace is the 1997 multiplayer space shooter SubSpace written again in Rust, from the wire protocol up: a client, a zone server and a shared core, all open source.">
+  <link rel="canonical" href="https://osssubspace.com/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#05070c">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Open SubSpace">
+  <meta property="og:title" content="Open SubSpace — SubSpace, written again in Rust">
+  <meta property="og:description" content="A new client, a zone server and a shared core for the 1997 space shooter, from the wire protocol up. Open source.">
+  <meta property="og:url" content="https://osssubspace.com/">
+  <meta property="og:image" content="https://osssubspace.com/images/arena.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="800">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="/" aria-label="Open SubSpace home">
+        <img src="/favicon.svg" alt="" width="28" height="28">
+        <span>Open SubSpace</span>
+      </a>
+      <nav aria-label="Sections">
+        <ul>
+          <li><a href="#play">Play</a></li>
+          <li><a href="#zone">Run a zone</a></li>
+          <li><a href="#build">Build on it</a></li>
+          <li><a href="#evidence">Evidence</a></li>
+          <li><a href="#status">Status</a></li>
+          <li><a class="nav-gh" href="#repos">Source</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Open source · Rust · 0.1.x</p>
+          <h1>SubSpace, written again <span class="accent">from the wire up.</span></h1>
+          <p class="lede">
+            SubSpace is a top-down multiplayer space shooter from 1997. Ships drift; bullets and
+            bombs carry your momentum with them; a map is 1024×1024 tiles of asteroid and wall,
+            with flags to take and a team to take them from. When the publisher walked away, the
+            players kept it running themselves — and they still are.
+          </p>
+          <p class="lede">
+            <strong>Open SubSpace</strong> is that game rebuilt in Rust so that it outlives the
+            binaries it grew up in: a new client, a zone server that runs existing zones
+            unchanged, and a shared core anyone can build on. Not an emulator and not a fork —
+            every packet, file format and physics rule implemented fresh, and checked against the
+            software that is still running.
+          </p>
+          <div class="cta">
+            <a class="btn btn-primary" href="#play">Fly it</a>
+            <a class="btn" href="#zone">Run a zone</a>
+            <a class="btn btn-ghost" href="#repos">Read the source</a>
+          </div>
+        </div>
+        <figure class="hero-shot">
+          <img src="/images/arena.png" width="1280" height="800"
+               alt="oss-client flying in the bundled zone: two ships among green prizes, with the ship list, radar and energy bar on screen">
+          <figcaption>oss-client in the zone that ships with oss-server, taken with <code>--screenshot</code>.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="repos" class="band">
+      <div class="wrap">
+        <h2>Three repositories, one game</h2>
+        <p class="section-lede">
+          The split is deliberate. The core is MIT so that anyone's bot, tool or alternative
+          client can build on it whatever its licence; the client and server are GPL because
+          they follow ASSS, whose GPL source may be ported into them.
+        </p>
+        <div class="cards three">
+          <article class="card">
+            <header>
+              <h3><a href="https://github.com/DangerMouseUK/oss-client">oss-client</a></h3>
+              <span class="tag">GPL-2.0-or-later</span>
+            </header>
+            <p>The game client. Cross-platform, runs at whatever resolution and refresh rate your
+              display has, takes a gamepad, and needs no Continuum install to start. Plus
+              <code>oss-session</code> and a headless bot.</p>
+            <a class="more" href="https://github.com/DangerMouseUK/oss-client">github.com/DangerMouseUK/oss-client</a>
+          </article>
+          <article class="card">
+            <header>
+              <h3><a href="https://github.com/DangerMouseUK/oss-server">oss-server</a></h3>
+              <span class="tag">GPL-2.0-or-later</span>
+            </header>
+            <p>The zone server. Follows ASSS closely enough to take an existing zone directory and
+              run it unchanged — same <code>.conf</code> files, maps, module names and
+              <code>?commands</code> — with VIE and OpenSec clients on one port.</p>
+            <a class="more" href="https://github.com/DangerMouseUK/oss-server">github.com/DangerMouseUK/oss-server</a>
+          </article>
+          <article class="card">
+            <header>
+              <h3><a href="https://github.com/DangerMouseUK/oss-core">oss-core</a></h3>
+              <span class="tag tag-mit">MIT</span>
+            </header>
+            <p>The shared half: packets, transport, map and settings formats, the physics
+              simulation, a bot SDK and a conformance suite anyone can run against their own
+              implementation.</p>
+            <a class="more" href="https://github.com/DangerMouseUK/oss-core">github.com/DangerMouseUK/oss-core</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="play">
+      <div class="wrap split">
+        <div>
+          <h2>Play</h2>
+          <p>
+            The client uses the shared crates as a <strong>sibling checkout</strong>, so clone
+            both and run it. You need a Rust toolchain (1.88 or newer).
+          </p>
+          <pre class="code" data-copy><code>git clone https://github.com/DangerMouseUK/oss-core
+git clone https://github.com/DangerMouseUK/oss-client
+cd oss-client
+cargo run --release</code></pre>
+          <p>
+            That opens the login screen: zone, name, password, arena, ship. <kbd>F3</kbd> is the
+            zone browser, <kbd>F5</kbd> the offline sandbox. The keys are Continuum's, so a
+            returning player already has them in their hands, and <kbd>F1</kbd> in the game lists
+            them — yours, if you have changed any.
+          </p>
+          <p>No zone to hand? Fly on your own:</p>
+          <pre class="code" data-copy><code>cargo run --release -p oss-client -- --sandbox</code></pre>
+          <p class="fine">
+            Continuum's own graphics and sounds are bundled so the client plays from a fresh
+            clone; point it at a Continuum install with <code>--continuum-dir</code> and it uses
+            yours. The client contacts no directory server you have not configured.
+            <a href="https://github.com/DangerMouseUK/oss-client/blob/main/docs/playing.md">Keys, chat, macros and replays →</a>
+          </p>
+        </div>
+        <div class="shots">
+          <figure>
+            <img src="/images/spectating.png" width="1280" height="800" loading="lazy"
+                 alt="oss-client spectating another ship in the bundled zone">
+            <figcaption>Spectating another ship.</figcaption>
+          </figure>
+          <figure>
+            <img src="/images/zone-browser.png" width="616" height="260" loading="lazy"
+                 alt="The zone browser listing live zones with population and ping">
+            <figcaption>The zone browser (<kbd>F3</kbd>) listing live zones, after adding directory servers — the client ships with none.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="zone" class="band">
+      <div class="wrap split reverse">
+        <div>
+          <h2>Run a zone</h2>
+          <p>
+            With no arguments, <code>oss-server</code> runs its bundled zone — the ASSS 1.4.4
+            sample zone, compiled into the binary — on UDP port 5000. You are now a zone.
+          </p>
+          <pre class="code" data-copy><code>git clone https://github.com/DangerMouseUK/oss-core
+git clone https://github.com/DangerMouseUK/oss-server
+cd oss-server
+cargo run --release</code></pre>
+          <p>Already run a zone? Point it at your directory, unchanged:</p>
+          <pre class="code" data-copy><code>oss-server --zone &lt;dir&gt;        # run an ASSS-style zone directory
+oss-server --init-zone &lt;dir&gt;   # write the bundled zone out as a starting point</code></pre>
+          <ul class="ticks">
+            <li>ASSS's config reader: <code>#include</code>, sections, per-arena overrides.</li>
+            <li>One process, structured logs, a JSON admin API and Prometheus metrics.</li>
+            <li>43 modules in the tree; the ones ASSS has that this doesn't are named in <code>conf/modules.conf</code>.</li>
+            <li><code>oss-biller</code>: a small SQLite-backed SSC billing server for private and test zones.</li>
+          </ul>
+        </div>
+        <figure class="shot-single">
+          <img src="/images/bundled-zone.png" width="1280" height="800" loading="lazy"
+               alt="The bundled zone seen from oss-client, with eight players in arena scf">
+          <figcaption>The bundled zone, running, with eight clients in it.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="build">
+      <div class="wrap">
+        <h2>Build on it</h2>
+        <p class="section-lede">
+          <code>oss-core</code> has no game loop and no window. It is what you reach for when you
+          are writing a bot, a tool, a zone server or another client — in Rust directly, or in any
+          language through the conformance suite's adapter protocol.
+        </p>
+        <div class="cards two">
+          <article class="card">
+            <header><h3>A bot in about forty lines</h3></header>
+            <p>The SDK handles the handshake, login, arena entry, map download and security
+              challenge. Your code sees events — <code>PlayerEntered</code>, <code>Chat</code>,
+              <code>Kill</code> — and replies.</p>
+            <pre class="code" data-copy><code>cargo run -p oss-bot-sdk --example greeter -- \
+  127.0.0.1:5000 GreeterBot password</code></pre>
+            <a class="more" href="https://github.com/DangerMouseUK/oss-core/blob/main/crates/oss-bot-sdk/examples/greeter.rs">Read greeter.rs →</a>
+          </article>
+          <article class="card">
+            <header><h3>Check your own implementation</h3></header>
+            <p>The conformance suite drives anything that speaks a line-based stdin/stdout
+              protocol, in any language — and can stand in as a zone or a client to check live
+              software.</p>
+            <pre class="code" data-copy><code>cargo run --release -p oss-conformance -- vectors -- python3 my_adapter.py
+cargo run --release -p oss-conformance -- server 127.0.0.1:5000</code></pre>
+            <a class="more" href="https://github.com/DangerMouseUK/oss-core/blob/main/docs/conformance.md">The adapter protocol →</a>
+          </article>
+        </div>
+        <ul class="crates">
+          <li><code>oss-proto</code><span>Packet types and codecs</span></li>
+          <li><code>oss-net</code><span>Sans-IO transport: reliability, clustering, file transfer, VIE and OpenSec</span></li>
+          <li><code>oss-formats</code><span><code>.lvl</code>, eLVL, <code>.lvz</code>, <code>.ossr</code> replays</span></li>
+          <li><code>oss-sim</code><span>Deterministic 100 Hz integer physics, shared by client and server</span></li>
+          <li><code>oss-bot-sdk</code><span>Zone bots in a few lines</span></li>
+          <li><code>oss-conformance</code><span>Vector, live-client and live-server checks</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="evidence" class="band">
+      <div class="wrap">
+        <h2>Why you would trust it</h2>
+        <p class="section-lede">The project's habit is that a claim names its evidence. These are the ones worth checking first.</p>
+        <div class="stats">
+          <div class="stat"><span class="num">3,761</span><span class="label">recorded conformance checks, captured from unmodified reference implementations</span></div>
+          <div class="stat"><span class="num">846</span><span class="label">arena settings checked bit-for-bit against ASSS's own settings packet</span></div>
+          <div class="stat"><span class="num">12</span><span class="label">fuzz targets — every packet, map, LVZ and replay decoder, and the transport</span></div>
+          <div class="stat"><span class="num">~12%</span><span class="label">of one core for 500 players over a whole map, against a 20% budget</span></div>
+        </div>
+        <div class="cards two evidence">
+          <article class="card">
+            <h3>It plays with software nobody here wrote</h3>
+            <p>A stock <code>oss-client</code> joined a zone running <strong>subgame</strong>, the
+              original server software, and flew. An unmodified, prebuilt <strong>MERVBot 4.6</strong>
+              completed a full session on <code>oss-server</code>. A genuine <strong>Continuum 0.40</strong>
+              client logged in and flew on <code>oss-server</code>.</p>
+            <a class="more" href="https://github.com/DangerMouseUK/oss-server/blob/main/docs/interoperability.md">What has connected, and what each run did not cover →</a>
+          </article>
+          <article class="card">
+            <h3>Prediction and anti-cheat are the same code</h3>
+            <p><code>oss-sim</code> is a fixed-step integer simulation with no floating point, used
+              by the client to predict and by the server to validate — so the two cannot drift
+              apart into false positives.</p>
+            <a class="more" href="https://github.com/DangerMouseUK/oss-core/blob/main/crates/oss-sim/SETTINGS.md">Every setting it reads, and its source →</a>
+          </article>
+          <article class="card">
+            <h3>Every protocol page states its evidence level</h3>
+            <p>One page per packet, each marked <em>Vectors</em>, <em>Sources</em>,
+              <em>Partly inferred</em>, <em>Observed</em> or <em>Open</em>. Where sources disagree
+              the page says so rather than picking quietly.</p>
+            <a class="more" href="https://github.com/DangerMouseUK/oss-core/blob/main/docs/protocol/README.md">The protocol docs →</a>
+          </article>
+          <article class="card">
+            <h3>Performance is measured — including where it falls short</h3>
+            <p>500 players over a whole map fit the budget. In a <em>crowded</em> 500-player arena
+              they cost about 27% of a core with VIE and 35% with OpenSec, and the budget does not
+              close. That is written down rather than rounded away.</p>
+            <a class="more" href="https://github.com/DangerMouseUK/oss-server/blob/main/docs/performance.md">Method, machine and control runs →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="status">
+      <div class="wrap">
+        <h2>What works, and what does not</h2>
+        <div class="status-grid">
+          <div class="status ok">
+            <h3>Working today</h3>
+            <p><strong>Client:</strong> login and registration, arena entry, map/LVZ/news download
+              with a cache, the full renderer and HUD, flying and fighting with client-side
+              prediction, public, team, private, channel and squad chat with Continuum's prefixes, macros, spectating, turrets,
+              the zone browser, replays, gamepads, colour-blind and high-contrast palettes, an
+              offline sandbox.</p>
+            <p><strong>Server:</strong> arenas, freq manager, ships and weapons with plausibility
+              checks, kills and scoring, flags, balls and soccer, KOTH, bricks, prizes and
+              <code>?buy</code>, chat and chatnet, capability groups, bans, persistence, directory
+              registration, SSC billing, hot reload, module load/unload, admin API and metrics.</p>
+          </div>
+          <div class="status no">
+            <h3>Not here, on purpose</h3>
+            <p><strong>Continuum's own encryption.</strong> Its key expansion is not public and
+              these repositories do not carry it. A build from source cannot join zones that
+              require Continuum's encryption; zones that accept VIE — including ASSS and the
+              original server — and OpenSec zones are reachable. The security path is a trait, so
+              a build that supplies its own cipher needs nothing here to change.</p>
+          </div>
+          <div class="status todo">
+            <h3>Not done yet</h3>
+            <p><strong>Packaging.</strong> No installer, release binary, container image or
+              crates.io publication — building from source is the only way in.</p>
+            <p><strong>A browser build.</strong> The renderer is kept WebGPU-compatible and the
+              core crates build for WebAssembly, but the client is not built or tested there.</p>
+            <p><strong>A crowd.</strong> It has been played against the original server software
+              and its own — not yet by a hundred people at once.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contribute" class="band">
+      <div class="wrap narrow center">
+        <h2>Bring a difference you can show</h2>
+        <p>
+          Issues and pull requests are welcome. The most useful thing you can bring is a
+          difference from the original you can demonstrate — a setting that behaves differently,
+          a packet that is mishandled, a frame that does not look right next to Continuum — with
+          the evidence behind it.
+        </p>
+        <div class="cta center">
+          <a class="btn btn-primary" href="https://github.com/DangerMouseUK/oss-client/issues">Client issues</a>
+          <a class="btn" href="https://github.com/DangerMouseUK/oss-server/issues">Server issues</a>
+          <a class="btn" href="https://github.com/DangerMouseUK/oss-core/issues">Core issues</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <p>
+        Code: <a href="https://github.com/DangerMouseUK/oss-core/blob/main/LICENSE">MIT</a> (oss-core) and
+        <a href="https://github.com/DangerMouseUK/oss-client/blob/main/LICENSE">GPL-2.0-or-later</a> (oss-client, oss-server).
+        The source of this website is at
+        <a href="https://github.com/DangerMouseUK/oss-web">github.com/DangerMouseUK/oss-web</a>.
+      </p>
+      <p class="fine">
+        SubSpace and Continuum are the names of the original games. Open SubSpace is an
+        independent, compatible implementation and is not affiliated with their authors.
+        Screenshots show Continuum's own graphics, which are not this project's work.
+        This site sets no cookies and loads nothing from third parties.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

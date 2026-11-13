@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#05070c"/>
+  <circle cx="14" cy="16" r="1.4" fill="#ffffff" opacity=".6"/>
+  <circle cx="50" cy="11" r="1.1" fill="#ffffff" opacity=".5"/>
+  <circle cx="53" cy="50" r="1.3" fill="#ffffff" opacity=".45"/>
+  <circle cx="10" cy="47" r="1" fill="#ffffff" opacity=".5"/>
+  <!-- a small arrowhead ship, banking -->
+  <g transform="rotate(-35 32 32)">
+    <path d="M32 9 L45 49 L32 41 L19 49 Z" fill="#7cf08a"/>
+    <path d="M32 9 L32 41 L19 49 Z" fill="#5bd06b"/>
+    <path d="M27 47 L32 57 L37 47 Z" fill="#f4c95d"/>
+  </g>
+</svg>

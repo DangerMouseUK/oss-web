@@ -1,0 +1,12 @@
+# Editors and OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local-only files: never commit these
+.env
+.env.*
+*.local
+*.local.md
+.claude/

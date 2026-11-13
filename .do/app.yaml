@@ -1,0 +1,25 @@
+# DigitalOcean App Platform spec for osssubspace.com.
+#
+# A plain static site: no build step. App Platform serves the files in `public/`
+# as they are committed, and redeploys on every push to `main`.
+#
+# Create the app from this file with `doctl apps create --spec .do/app.yaml`,
+# or paste it into the App Spec editor in the control panel.
+# Nothing in this file is secret, and nothing secret belongs in it.
+
+name: oss-web
+
+static_sites:
+  - name: site
+    github:
+      repo: DangerMouseUK/oss-web
+      branch: main
+      deploy_on_push: true
+    source_dir: /
+    output_dir: public
+    index_document: index.html
+    error_document: 404.html
+
+domains:
+  - domain: osssubspace.com
+    type: PRIMARY
