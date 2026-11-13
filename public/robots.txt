@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://osssubspace.com/sitemap.xml
+Sitemap: https://ossubspace.com/sitemap.xml

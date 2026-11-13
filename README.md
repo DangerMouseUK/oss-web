@@ -1,6 +1,6 @@
 # oss-web
 
-The website for **Open SubSpace** — [osssubspace.com](https://osssubspace.com).
+The website for **Open SubSpace** — [ossubspace.com](https://ossubspace.com).
 
 Open SubSpace is the 1997 space shooter SubSpace written again in Rust, from the wire
 protocol up. The code lives in three repositories; this one is only the website, kept in
@@ -58,7 +58,7 @@ build: App Platform serves `public/` as it is and redeploys on every push. [`.do
    source directory, so left blank it reports *"No components detected"*. It should then
    offer a **Static Site** with no build command.
 2. Check the app's default `*.ondigitalocean.app` address serves the page.
-3. Add the custom domain `osssubspace.com` to the app (the spec already lists it) and choose
+3. Add the custom domain `ossubspace.com` to the app (the spec already lists it) and choose
    *"I'll manage my domain"*: DNS is at Cloudflare, not DigitalOcean.
 
 **Cloudflare** (registrar, DNS and proxy):
@@ -70,7 +70,7 @@ build: App Platform serves `public/` as it is and redeploys on every push. [`.do
    it. Then switch both to **Proxied (orange cloud)**.
 3. SSL/TLS mode: **Full (strict)**. App Platform has a valid certificate for the domain, so
    strict works, and anything weaker invites redirect loops or an unverified hop.
-4. Add a Redirect Rule sending `www.osssubspace.com/*` to `https://osssubspace.com/${1}`
+4. Add a Redirect Rule sending `www.ossubspace.com/*` to `https://ossubspace.com/${1}`
    (301), so there is one canonical address.
 5. Optional: *Always Use HTTPS* on, and HSTS once you are sure HTTPS is staying.
 

@@ -1,4 +1,4 @@
-# DigitalOcean App Platform spec for osssubspace.com.
+# DigitalOcean App Platform spec for ossubspace.com.
 #
 # A plain static site: no build step. App Platform serves the files in `public/`
 # as they are committed, and redeploys on every push to `main`.
@@ -24,5 +24,5 @@ static_sites:
     error_document: 404.html
 
 domains:
-  - domain: osssubspace.com
+  - domain: ossubspace.com
     type: PRIMARY
