@@ -1,13 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges">
-  <rect width="16" height="16" rx="3" fill="#04060b" shape-rendering="geometricPrecision"/>
-  <!-- an original top-down fighter, drawn on a 16x16 pixel grid so it stays crisp in a browser tab -->
-  <path fill="#e1e6ef" d="M2 2h2v1h-2zM4 3h2v1h-2zM5 4h2v1h-2zM6 5h2v1h-2zM7 6h2v1h-2zM8 7h2v1h-2zM9 8h2v1h-2zM10 9h1v1h-1z"/>
-  <path fill="#a7b1c2" d="M5 5h1v1h-1zM6 6h1v1h-1zM7 7h1v1h-1zM10 7h4v1h-4zM8 8h1v1h-1zM9 9h1v1h-1zM7 10h1v1h-1zM10 10h1v1h-1zM7 11h1v1h-1zM7 12h1v1h-1zM7 13h1v1h-1z"/>
-  <path fill="#6c778b" d="M2 3h1v1h-1zM3 4h1v1h-1zM3 5h2v1h-2zM4 6h2v1h-2zM5 7h2v1h-2zM6 8h2v1h-2zM11 8h3v1h-3zM7 9h2v1h-2zM11 9h2v1h-2zM8 10h2v1h-2zM8 11h2v1h-2zM8 12h2v1h-2zM8 13h1v1h-1z"/>
-  <path fill="#333c4e" d="M11 10h1v1h-1zM10 11h2v1h-2z"/>
-  <path fill="#e8493c" d="M1 1h2v1h-2zM1 2h1v1h-1zM9 6h4v1h-4zM14 7h1v1h-1zM14 8h1v1h-1zM6 9h1v1h-1zM6 10h1v1h-1zM6 11h1v1h-1zM6 12h1v1h-1zM7 14h2v1h-2z"/>
-  <path fill="#c9c9ff" d="M3 3h1v1h-1z"/>
-  <path fill="#8585f2" d="M4 4h1v1h-1z"/>
-  <path fill="#f5c555" d="M12 12h1v1h-1z"/>
-  <path fill="#f08a3c" d="M13 12h1v1h-1zM12 13h2v1h-2z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Javelin">
+  <title>Javelin</title>
+  <!--
+    The Javelin, ship two, seen from above the way the game draws it.
+
+    An original drawing, not a copy of Continuum's artwork: the outline is measured off
+    the 36x36 sprite row by row and redrawn on a 64-unit grid (blunt nose, the chine step
+    where the wing glove starts, the square intake boxes, the long straight wing sweep,
+    the forked tail), and the golds are sampled from it so this reads as the Javelin and
+    not as some other ship. The original is a nod to the F-14 Tomcat, hence the twin
+    booms and the widely spaced nozzles.
+  -->
+  <defs>
+    <path id="jv-hull" d="M30 2 L34 2 L36.4 4.8 L38 9 L38 13.5 L42 15.2 L44 20.6
+      L46 23.4 L46 26 L48 27.6 L48 36 L50 37.6 L62 44 L62 50 L50 50 L50 62 L38 62
+      L38 54 L34.2 54 L34.2 58.4 L32 60 L29.8 58.4 L29.8 54 L26 54 L26 62 L14 62
+      L14 50 L2 50 L2 44 L14 37.6 L16 36 L16 27.6 L18 26 L18 23.4 L20 20.6 L22 15.2
+      L26 13.5 L26 9 L27.6 4.8 Z"/>
+    <clipPath id="jv-clip"><use href="#jv-hull"/></clipPath>
+    <linearGradient id="jv-body" x1="14" y1="6" x2="52" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f2bd35"/>
+      <stop offset=".5" stop-color="#c88e14"/>
+      <stop offset="1" stop-color="#7a540b"/>
+    </linearGradient>
+    <linearGradient id="jv-glass" x1="32" y1="7" x2="32" y2="21" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d8e0e8"/>
+      <stop offset=".5" stop-color="#848d96"/>
+      <stop offset="1" stop-color="#2f363e"/>
+    </linearGradient>
+  </defs>
+
+  <use href="#jv-hull" fill="url(#jv-body)"/>
+
+  <g clip-path="url(#jv-clip)">
+    <!-- the sprite is lit from the upper left: the port side of the spine is its brightest band -->
+    <path d="M29.6 10 L29.6 54 L25 46 L25 21 Z" fill="#fdd45c" opacity=".58"/>
+    <!-- and the starboard side falls away into shadow -->
+    <path d="M34.4 10 L34.4 54 L40 46 L40 21 Z" fill="#6b4807" opacity=".55"/>
+    <!-- square intake boxes either side of the fuselage, dark on the sprite -->
+    <path d="M15 26.5 L20.6 24.6 L20.6 37 L15 38.4 Z" fill="#20252b"/>
+    <path d="M49 26.5 L43.4 24.6 L43.4 37 L49 38.4 Z" fill="#171c22"/>
+    <!-- dark red just inside each wing's leading edge -->
+    <path d="M49.6 36.4 L63 44 L63 46.4 L49.6 39 Z" fill="#70291b"/>
+    <path d="M14.4 36.4 L1 44 L1 46.4 L14.4 39 Z" fill="#8a3724"/>
+    <!-- and down the outer face of each tail boom -->
+    <path d="M13 49 L17.2 49 L17.2 63 L13 63 Z" fill="#8a3724"/>
+    <path d="M46.8 49 L51 49 L51 63 L46.8 63 Z" fill="#70291b"/>
+    <!-- aft deck sits in shadow behind the wings -->
+    <path d="M12 50 L52 50 L52 63 L12 63 Z" fill="#6b4908" opacity=".4"/>
+    <!-- the two nozzles -->
+    <path d="M26.1 46 L29.7 46 L29.7 56 L26.1 56 Z" fill="#191d22"/>
+    <path d="M34.3 46 L37.9 46 L37.9 56 L34.3 56 Z" fill="#101317"/>
+    <!-- spine shadow running aft from the cockpit -->
+    <path d="M31.3 20 L32.7 20 L32.7 53 L31.3 53 Z" fill="#6b4809" opacity=".8"/>
+  </g>
+
+  <!-- canopy -->
+  <path d="M32 5.6 L34.1 10.2 L34.6 18 L32 22 L29.4 18 L29.9 10.2 Z" fill="#0c0f13"/>
+  <path d="M32 7.4 L33.3 11 L33.7 17.6 L32 20.3 L30.3 17.6 L30.7 11 Z" fill="url(#jv-glass)"/>
+
+  <use href="#jv-hull" fill="none" stroke="#171004" stroke-width="1.5" stroke-linejoin="round"/>
 </svg>

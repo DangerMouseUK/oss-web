@@ -25,7 +25,9 @@ public/            everything that is served, exactly as committed
   styles.css
   site.js          copy buttons, the current section in the header, full-size
                    screenshots; the page works without it
-  favicon.svg
+  favicon.svg      the site mark: the Javelin, ship two, seen from above
+  favicon.ico      the same mark at 16, 32 and 48 px, for browsers that ask for a .ico
+  apple-touch-icon.png
   images/          screenshots, taken from the client and server repositories' docs
   robots.txt
   sitemap.xml
@@ -34,6 +36,11 @@ public/            everything that is served, exactly as committed
 
 The screenshots show Continuum's own graphics, which are not this project's work; see the
 [client's asset notes](https://github.com/DangerMouseUK/oss-client/blob/main/assets/classic/README.md).
+
+The site mark is the Javelin — ship two, the gold one, a 1997 nod to the F-14 Tomcat. It is
+an original drawing, not a lift of Continuum's sprite: the outline was measured off the
+sprite row by row and redrawn as vectors on a 64-unit grid, and the golds were sampled from
+it, so the ship is recognisably the Javelin while the artwork is this repository's own.
 
 ## Preview locally
 
