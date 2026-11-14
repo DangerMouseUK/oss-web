@@ -58,6 +58,11 @@ The site is a **static site component on DigitalOcean App Platform**, built from
 repository's `main` branch, with `public/` as its source directory. There is nothing to
 build: App Platform serves `public/` as it is and redeploys on every push. [`.do/app.yaml`](.do/app.yaml) is the spec.
 
+**So a push to `main` is a publication, and a correction is not instant.** There is no staging
+step and no approval in the path — `deploy_on_push: true` in the spec means the commit is live
+within minutes — and Cloudflare is in front of it, so a mistake keeps being served from the edge
+until the cache expires or is purged. Read the change before pushing it, not after.
+
 **First time:**
 
 1. Create the app — either `doctl apps create --spec .do/app.yaml`, or in the control panel
