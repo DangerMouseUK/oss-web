@@ -115,6 +115,19 @@ it a URL they have never fetched. Bump only the file you changed, everywhere it 
 - No third-party requests from the page. The Content-Security-Policy in each page's `<head>`
   enforces it: anything not served from this site is blocked.
 
+## Licence
+
+This repository's own work — the HTML, CSS and JavaScript under `public/`, the site mark,
+and the app spec — is **MIT**. See [`LICENSE`](LICENSE).
+
+**The screenshots in `public/images/` are not covered by it.** `arena.png`,
+`bundled-zone.png`, `spectating.png` and `zone-browser.png` show Continuum's own graphics,
+which are not this project's work. The MIT licence applies to this repository's own files;
+it does not apply to those four images, and nothing here relicenses them or makes any claim
+about what their licence is. The client's
+[asset notes](https://github.com/DangerMouseUK/oss-client/blob/main/assets/classic/README.md)
+say the same about the same artwork.
+
 ---
 
 SubSpace and Continuum are the names of the original games. Open SubSpace is an independent,
