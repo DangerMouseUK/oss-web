@@ -61,8 +61,9 @@
             <p class="lede">
               SubSpace is a top-down multiplayer space shooter from 1997. Ships drift; bullets and
               bombs carry your momentum with them; a map is 1024×1024 tiles of asteroid and wall,
-              with flags to take and a team to take them from. When the publisher walked away, the
-              players kept it running themselves — and they still are.
+              with flags to take and a team to take them from. When the publisher, Virgin
+              Interactive Entertainment, walked away, the players kept it running themselves —
+              and they still are.
             </p>
             <p>
               <strong>Open SubSpace</strong> is that game rebuilt in Rust so that it outlives the
@@ -227,6 +228,9 @@
           </div>
           <ul class="ticks">
             <li>ASSS's config reader: <code>#include</code>, sections, per-arena overrides.</li>
+            <li>VIE and OpenSec clients on one port. <strong>OpenSec</strong> is this project's own
+              transport encryption — X25519 and ChaCha20-Poly1305, optional at both ends —
+              <a href="https://github.com/DangerMouseUK/oss-core/blob/main/docs/protocol/opensec.md">specified in full</a>.</li>
             <li>One process, structured logs, a JSON admin API and Prometheus metrics.</li>
             <li>43 modules in the tree, 34 of them loaded by the bundled zone; the ones ASSS has that this doesn't are named in <code>conf/modules.conf</code>.</li>
             <li>A library first: a private or third-party build adds its own modules without patching the repository.</li>
@@ -332,7 +336,9 @@
             <h3>Every protocol page states its evidence level</h3>
             <p>One page per packet, each marked <em>Vectors</em>, <em>Sources</em>,
               <em>Partly inferred</em>, <em>Project spec</em>, <em>Observed</em> or <em>Open</em>. Where sources disagree
-              the page says so rather than picking quietly.</p>
+              the page says so rather than picking quietly. The three encryption eras — VIE,
+              Continuum and OpenSec — are
+              <a href="https://github.com/DangerMouseUK/oss-core/blob/main/docs/protocol/encryption.md">introduced on one page</a>.</p>
             <a class="more" href="https://github.com/DangerMouseUK/oss-core/blob/main/docs/protocol/README.md">The protocol docs →</a>
           </article>
           <article class="card">
@@ -437,7 +443,9 @@
                 and its own — not yet by a hundred people at once. Live internet zones may still
                 turn a client away on their own account policies.</li>
               <li><strong>A stable API.</strong> Everything is 0.1.x and moves when the evidence
-                says it should. OpenSec has not yet had an external cryptographic review.</li>
+                says it should.
+                <a href="https://github.com/DangerMouseUK/oss-core/blob/main/docs/protocol/opensec.md">OpenSec</a>
+                has not yet had an external cryptographic review.</li>
             </ul>
           </article>
         </div>
