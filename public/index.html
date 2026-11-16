@@ -25,7 +25,7 @@
   <meta property="og:image:alt" content="oss-client flying in the bundled zone: two ships among green prizes, with the ship list, radar and energy bar on screen">
   <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="stylesheet" href="/styles.css?v=1">
+  <link rel="stylesheet" href="/styles.css?v=2">
   <script src="/site.js?v=1" defer></script>
 </head>
 <body>
@@ -90,7 +90,7 @@
         <dl class="specs">
           <div><dt>Language</dt><dd>Rust 1.88 or newer; 1.89 for the server</dd></div>
           <div><dt>Simulation</dt><dd>100 Hz integer physics</dd></div>
-          <div><dt>On the wire</dt><dd>VIE and OpenSec, one port</dd></div>
+          <div><dt>On the wire</dt><dd>SubSpace era and OpenSec, one port</dd></div>
           <div><dt>Zones</dt><dd>ASSS directories, unchanged</dd></div>
           <div><dt>Licence</dt><dd>MIT core, GPL client and server</dd></div>
         </dl>
@@ -128,7 +128,7 @@
             </header>
             <p>The zone server. Follows ASSS closely enough to take an existing zone directory and
               run it unchanged — same <code>.conf</code> files, maps, module names and
-              <code>?commands</code> — with VIE and OpenSec clients on one port.</p>
+              <code>?commands</code> — with SubSpace-era and OpenSec clients on one port.</p>
             <span class="more" aria-hidden="true">github.com/DangerMouseUK/oss-server ↗</span>
           </article>
           <div class="stack-feeds" aria-hidden="true">both built on</div>
@@ -168,7 +168,8 @@
             That opens the login screen: zone, name, password, arena, ship. <kbd>F3</kbd> is the
             zone browser, <kbd>F5</kbd> the offline sandbox. The keys are Continuum's, so a
             returning player already has them in their hands, and <kbd>F1</kbd> in the game lists
-            them — yours, if you have changed any.
+            them — yours, if you have changed any. Joining a zone of your own? It prints the
+            password you need when it starts — see <a href="#zone">Run a zone</a>.
           </p>
           <p>No zone to hand? Fly on your own:</p>
           <div class="term" data-copy>
@@ -217,6 +218,13 @@
 <span class="ln">cd oss-server</span>
 <span class="ln">cargo run --release</span></code></pre>
           </div>
+          <p>
+            <strong>It prints a password on start, and you need it to log in.</strong> A zone that has been
+            given no login configuration of its own generates one, prints it once, and then admits any name
+            that presents it — so copy it out of the server's output before you connect. A zone with a
+            directory keeps it in <code>conf/passwd.conf</code>; the bundled zone, which writes nothing, makes
+            a new one every time it starts. <code>--zone-password &lt;pw&gt;</code> sets your own instead.
+          </p>
           <p>Already run a zone? Point it at your directory, unchanged. <code>cargo run --release</code>
             leaves the binary at <code>target/release/oss-server</code>:</p>
           <div class="term" data-copy>
@@ -228,13 +236,23 @@
           </div>
           <ul class="ticks">
             <li>ASSS's config reader: <code>#include</code>, sections, per-arena overrides.</li>
-            <li>VIE and OpenSec clients on one port. <strong>OpenSec</strong> is this project's own
-              transport encryption — X25519 and ChaCha20-Poly1305, optional at both ends —
+            <li>SubSpace-era and OpenSec clients on one port. <strong>OpenSec</strong> is this project's own
+              transport encryption — X25519 and ChaCha20-Poly1305 — tried first and falling back to the
+              SubSpace-era cipher for anything that does not speak it,
               <a href="https://github.com/DangerMouseUK/oss-core/blob/main/docs/protocol/opensec.md">specified in full</a>.</li>
+            <li><strong>Every negotiated session is encrypted.</strong> The SubSpace-era cipher is the floor
+              and nothing automatic goes below it: a peer that asks for an unencrypted session is declined
+              rather than answered. Running in the clear is a development setting, off by default, that has
+              to be set at each end separately — no zone can ask a client for it, and no client can ask a
+              zone.</li>
             <li>One process, structured logs, a JSON admin API and Prometheus metrics.</li>
             <li>43 modules in the tree, 34 of them loaded by the bundled zone; the ones ASSS has that this doesn't are named in <code>conf/modules.conf</code>.</li>
             <li>A library first: a private or third-party build adds its own modules without patching the repository.</li>
             <li><code>oss-biller</code>: a small SQLite-backed SSC billing server for private and test zones.</li>
+            <li>Deployable: a container image, and a Linux <code>install.sh</code> with a hardened systemd
+              unit that runs the zone as an unprivileged service account and starts nothing by itself —
+              <a href="https://github.com/DangerMouseUK/oss-server/blob/main/docs/deployment.md">deployment, and what is checked</a>.
+              Both build from source; the image is published to no registry yet.</li>
           </ul>
         </div>
         <figure class="shot shot-single" data-reveal>
@@ -289,7 +307,7 @@
         <h4 class="list-title">The crates in oss-core</h4>
         <ul class="crates" data-reveal>
           <li><code>oss-proto</code><span>Packet types and codecs</span></li>
-          <li><code>oss-net</code><span>Sans-IO transport: reliability, clustering, file transfer, VIE and OpenSec</span></li>
+          <li><code>oss-net</code><span>Sans-IO transport: reliability, clustering, file transfer, the SubSpace-era cipher and OpenSec</span></li>
           <li><code>oss-formats</code><span><code>.lvl</code>, eLVL, <code>.lvz</code>, <code>.ossr</code> replays</span></li>
           <li><code>oss-sim</code><span>Deterministic 100 Hz integer physics, shared by client and server</span></li>
           <li><code>oss-bot-sdk</code><span>Zone bots in a few lines</span></li>
@@ -316,11 +334,12 @@
             <p class="card-tag">Interoperability</p>
             <h3>It plays with software nobody here wrote</h3>
             <p>A stock <code>oss-client</code> joined a zone running <strong>subgame</strong>, the
-              original server software, and flew. An unmodified, prebuilt <strong>MERVBot 4.6</strong>
-              completed a full session over VIE on <code>oss-server</code>. A genuine
-              <strong>Continuum 0.40</strong> client logged in and flew on <code>oss-server</code>,
-              with Continuum's key exchange supplied by a private module that is not in these
-              repositories.</p>
+              original server software, and flew. The original <strong>1998 SubSpace client</strong>
+              logged in to <code>oss-server</code>, downloaded the news, entered an arena and flew. An
+              unmodified, prebuilt <strong>MERVBot 4.6</strong> completed a full session over the
+              SubSpace-era cipher. A genuine <strong>Continuum 0.40</strong> client logged in and flew on
+              <code>oss-server</code>, with Continuum's key exchange supplied by a private module that is
+              not in these repositories.</p>
             <a class="more" href="https://github.com/DangerMouseUK/oss-server/blob/main/docs/interoperability.md">What has connected, and what each run did not cover →</a>
           </article>
           <article class="card">
@@ -336,16 +355,17 @@
             <h3>Every protocol page states its evidence level</h3>
             <p>One page per packet, each marked <em>Vectors</em>, <em>Sources</em>,
               <em>Partly inferred</em>, <em>Project spec</em>, <em>Observed</em> or <em>Open</em>. Where sources disagree
-              the page says so rather than picking quietly. The three encryption eras — VIE,
-              Continuum and OpenSec — are
-              <a href="https://github.com/DangerMouseUK/oss-core/blob/main/docs/protocol/encryption.md">introduced on one page</a>.</p>
+              the page says so rather than picking quietly. The three encryption eras — SubSpace era,
+              Continuum era and OpenSec — are
+              <a href="https://github.com/DangerMouseUK/oss-core/blob/main/docs/protocol/encryption.md">introduced on one page</a>,
+              where the SubSpace-era cipher appears under its own name, VIE, after the publisher.</p>
             <a class="more" href="https://github.com/DangerMouseUK/oss-core/blob/main/docs/protocol/README.md">The protocol docs →</a>
           </article>
           <article class="card">
             <p class="card-tag">Performance</p>
             <h3>Performance is measured — including where it falls short</h3>
             <p>500 players over a whole map fit the budget. In a <em>crowded</em> 500-player arena
-              they cost about 27% of a core with VIE and 35% with OpenSec, and the budget does not
+              they cost about 27% of a core with the SubSpace-era cipher and 35% with OpenSec, and the budget does not
               close. That is written down rather than rounded away.</p>
             <a class="more" href="https://github.com/DangerMouseUK/oss-server/blob/main/docs/performance.md">Method, machine and control runs →</a>
           </article>
@@ -428,15 +448,18 @@
               reasons for it stand, and no longer. A client built from these repositories cannot
               join zones that require Continuum's encryption, and a Continuum client can play on
               <code>oss-server</code> only if that cipher module is supplied separately. Zones that
-              accept VIE — including ASSS and the original server — and OpenSec zones are
-              reachable. The security path is a trait, so a build that supplies its own cipher
+              accept the SubSpace-era cipher — including ASSS and the original server — and OpenSec
+              zones are reachable. The security path is a trait, so a build that supplies its own cipher
               needs nothing here to change.</p>
           </article>
           <article class="status todo" data-reveal>
             <h3><span class="led" aria-hidden="true"></span>Not done yet</h3>
             <ul class="todo-list">
-              <li><strong>Packaging.</strong> No installer, release binary, container image or
-                crates.io publication — building from source is the only way in.</li>
+              <li><strong>Something to download.</strong> Each repository has a workflow that turns a
+                version tag into binaries for Linux, Windows and Apple Silicon macOS with checksums, and
+                the server has a container image. But no version tag has ever been pushed, so no release
+                has been built and no image has been published, and nothing is on crates.io.
+                <strong>Building from source is still the only way in.</strong></li>
               <li><strong>A browser build.</strong> The renderer is kept WebGPU-compatible and the
                 core crates build for WebAssembly, but the client is not built or tested there.</li>
               <li><strong>A crowd.</strong> It has been played against the original server software
@@ -445,7 +468,10 @@
               <li><strong>A stable API.</strong> Everything is 0.1.x and moves when the evidence
                 says it should.
                 <a href="https://github.com/DangerMouseUK/oss-core/blob/main/docs/protocol/opensec.md">OpenSec</a>
-                has not yet had an external cryptographic review.</li>
+                has not yet had an external cryptographic review. If you are minded to give it one, the
+                spec is complete and
+                <a href="https://github.com/DangerMouseUK/oss-core/blob/main/SECURITY.md">oss-core's security policy</a>
+                says how to report what you find.</li>
             </ul>
           </article>
         </div>
@@ -467,6 +493,14 @@
           <a class="btn" href="https://github.com/DangerMouseUK/oss-server/issues">Server issues <span aria-hidden="true">↗</span></a>
           <a class="btn" href="https://github.com/DangerMouseUK/oss-core/issues">Core issues <span aria-hidden="true">↗</span></a>
         </div>
+        <p class="fine">
+          <strong>Found a security problem? Please do not open an issue.</strong> Each repository takes
+          private reports through GitHub's advisory form, and each says what it considers in scope:
+          <a href="https://github.com/DangerMouseUK/oss-client/blob/main/SECURITY.md">client</a> ·
+          <a href="https://github.com/DangerMouseUK/oss-server/blob/main/SECURITY.md">server</a> ·
+          <a href="https://github.com/DangerMouseUK/oss-core/blob/main/SECURITY.md">core</a> ·
+          <a href="https://github.com/DangerMouseUK/oss-web/blob/main/SECURITY.md">this website</a>.
+        </p>
       </div>
     </section>
   </main>
@@ -484,6 +518,9 @@
             <a href="https://github.com/DangerMouseUK/oss-client/blob/main/LICENSE">GPL-2.0-or-later</a> (oss-client, oss-server).
             The source of this website is at
             <a href="https://github.com/DangerMouseUK/oss-web">github.com/DangerMouseUK/oss-web</a>.
+            A security problem with the site itself goes to
+            <a href="https://github.com/DangerMouseUK/oss-web/blob/main/SECURITY.md">its security policy</a>
+            — also at <a href="/.well-known/security.txt">/.well-known/security.txt</a>.
           </p>
         </div>
         <nav aria-label="Repositories">
