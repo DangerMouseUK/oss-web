@@ -387,6 +387,9 @@ figcaption code, figcaption kbd { font-size: .85em; }
 }
 .contribute .wrap { max-width: 800px; }
 .contribute p { font-size: 1.1rem; }
+/* The security-reporting note sits under the issue buttons: a footnote, not a
+   third paragraph, so it keeps .fine's size against .contribute p above. */
+.contribute p.fine { font-size: .95rem; margin-top: 36px; }
 
 /* ---------- footer ---------- */
 .foot { border-top: 1px solid var(--line); padding: 64px 0 56px; background: rgb(3 4 8 / .92); font-size: .92rem; color: var(--muted); }
