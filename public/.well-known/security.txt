@@ -1,0 +1,33 @@
+# Open SubSpace - https://ossubspace.com/
+#
+# Plain ASCII on purpose. A .txt file is often served without a charset, and
+# a reporter should not have to guess at mojibake in the file that tells them
+# how to reach us.
+#
+# This file follows RFC 9116. It says how to report a security problem in
+# this website. The software the site describes is three separate
+# repositories, each with its own policy; they are listed at the bottom.
+#
+# Expires is a required field and an expired file is worse than no file.
+# Renew it before the date below, and move the date no more than a year
+# ahead each time.
+
+Contact: https://github.com/DangerMouseUK/oss-web/security/advisories/new
+Expires: 2027-11-15T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://ossubspace.com/.well-known/security.txt
+Policy: https://github.com/DangerMouseUK/oss-web/blob/main/SECURITY.md
+
+# The site is a hand-written static site: no backend, no database, no
+# accounts, no forms, no cookies, no analytics and no third-party requests.
+# Everything served is a file in public/, exactly as committed. The policy
+# above says what is in scope and what is not.
+#
+# Vulnerabilities in the client, the zone server or the shared crates belong
+# in those repositories, not here:
+#
+#   https://github.com/DangerMouseUK/oss-client/security/policy
+#   https://github.com/DangerMouseUK/oss-server/security/policy
+#   https://github.com/DangerMouseUK/oss-core/security/policy
+#
+# One volunteer maintainer. Acknowledgement within seven days. No bug bounty.

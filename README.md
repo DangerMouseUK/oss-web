@@ -31,8 +31,17 @@ public/            everything that is served, exactly as committed
   images/          screenshots, taken from the client and server repositories' docs
   robots.txt
   sitemap.xml
+  .well-known/
+    security.txt   where to report a security problem, in RFC 9116 form
 .do/app.yaml       the DigitalOcean App Platform spec
 ```
+
+**`security.txt` has an expiry date and an expired one is worse than none.** RFC 9116 makes
+`Expires` a required field, and a researcher who finds a stale file has been told the contact
+is no longer maintained. Renew it before the date in the file, moving it no more than a year
+ahead. The route it points at is [`SECURITY.md`](SECURITY.md), which is this site's policy
+only — the client, the server and the shared crates each have their own, and the file names
+them.
 
 The screenshots show Continuum's own graphics, which are not this project's work; see the
 [client's asset notes](https://github.com/DangerMouseUK/oss-client/blob/main/assets/classic/README.md).
